@@ -2,6 +2,7 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Activity from "./components/Activity.js";
+import ActivityList from "./components/ActivityList.js";
 class App extends React.Component {
   render() {
     return (
@@ -14,8 +15,9 @@ class App extends React.Component {
             <button> Login </button>
           </div>
         </div>
-        <div>
-          <Activity></Activity>
+        <div className="App-body">
+          <ActivityList></ActivityList>
+          <Activity time="4"></Activity>
         </div>
       </div>
     );

@@ -5,8 +5,11 @@ import "./Activity.css";
 class Activity extends React.Component {
   constructor(props) {
     super(props);
-    const time = 3;
-    this.state = { time: time, stopwatchActive: false, countdownActive: false };
+    this.state = {
+      time: this.props.time,
+      stopwatchActive: false,
+      countdownActive: false,
+    };
     this.startStopwatch = this.startStopwatch.bind(this);
     this.stopStopwatch = this.stopStopwatch.bind(this);
     this.startCountdown = this.startCountdown.bind(this);
