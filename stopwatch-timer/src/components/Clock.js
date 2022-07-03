@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./Clock.css";
 // Responsible for Updating Clock: Decrementing or Incrementing every second
 // State would be how much time is saved
 // [TODO]: How to save state persistently?
@@ -33,7 +33,7 @@ class Clock extends React.Component {
   render() {
     return (
       <div>
-        <h2> {this.formatClock(this.props.clock)}</h2>
+        <span class="clock-digits"> {this.formatClock(this.props.clock)}</span>
       </div>
     );
   }

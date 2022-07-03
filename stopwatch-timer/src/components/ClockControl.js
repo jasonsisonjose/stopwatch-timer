@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./ClockControl.css";
 class ClockControl extends React.Component {
   constructor(props) {
     super(props);
@@ -22,17 +22,37 @@ class ClockControl extends React.Component {
 
   stopwatchButton() {
     if (this.props.active && this.props.mode === "stopwatch") {
-      return <button onClick={this.stopStopwatch}> Stop </button>;
+      return (
+        <button class="clock-btn-active" onClick={this.stopStopwatch}>
+          {" "}
+          Stop{" "}
+        </button>
+      );
     } else {
-      return <button onClick={this.startStopwatch}> Start </button>;
+      return (
+        <button class="clock-btn" onClick={this.startStopwatch}>
+          {" "}
+          Stopwatch{" "}
+        </button>
+      );
     }
   }
 
   countdownButton() {
     if (this.props.active) {
-      return <button onClick={this.stopCountdown}> Stop </button>;
+      return (
+        <button class="clock-btn-active" onClick={this.stopCountdown}>
+          {" "}
+          Stop{" "}
+        </button>
+      );
     } else {
-      return <button onClick={this.startCountdown}> Start </button>;
+      return (
+        <button class="clock-btn" onClick={this.startCountdown}>
+          {" "}
+          Countdown{" "}
+        </button>
+      );
     }
   }
   // What type of button is it? Start Stop?

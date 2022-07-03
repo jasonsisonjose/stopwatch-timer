@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Clock from "./Clock.js";
 import ClockControl from "./ClockControl.js";
+import "./Activity.css";
 class Activity extends React.Component {
   constructor(props) {
     super(props);
@@ -75,14 +76,14 @@ class Activity extends React.Component {
       <div>
         <h1> Topic </h1>
         <Clock clock={this.state.time}></Clock>
-        <div>
+        <div class="control-btns-container">
           <ClockControl
             startStopwatch={this.startStopwatch}
             stopStopwatch={this.stopStopwatch}
             active={this.state.stopwatchActive}
             mode={"stopwatch"}
           ></ClockControl>
-
+          <div class="control-btns-spacer"></div>
           <ClockControl
             startCountdown={this.startCountdown}
             stopCountdown={this.stopCountdown}
