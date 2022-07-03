@@ -1,0 +1,8 @@
+.control-btns-container {
+  display: flex;
+  justify-content: center;
+}
+
+.control-btns-spacer {
+  width: 40px;
+}
