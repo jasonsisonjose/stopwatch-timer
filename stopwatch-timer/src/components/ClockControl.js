@@ -9,7 +9,6 @@ class ClockControl extends React.Component {
       stopStopwatch,
       startCountdown,
       stopCountdown,
-      active,
     } = props;
     if (mode === "stopwatch") {
       this.startStopwatch = startStopwatch.bind(this);
@@ -47,12 +46,21 @@ class ClockControl extends React.Component {
         </button>
       );
     } else {
-      return (
-        <button className="clock-btn" onClick={this.startCountdown}>
-          {" "}
-          Countdown{" "}
-        </button>
-      );
+      if (this.props.time === 0) {
+        return (
+          <button disabled className="clock-btn" onClick={this.startCountdown}>
+            {" "}
+            Countdown{" "}
+          </button>
+        );
+      } else {
+        return (
+          <button className="clock-btn" onClick={this.startCountdown}>
+            {" "}
+            Countdown{" "}
+          </button>
+        );
+      }
     }
   }
   // What type of button is it? Start Stop?

@@ -1,9 +1,10 @@
 import React from "react";
-import Activity from "./Activity";
+import "./ActivityList.css";
 class ActivityList extends React.Component {
   constructor(props) {
     super(props);
     this.activityList = [
+      { title: "Default", time: 0 },
       { title: "bro", time: 10 },
       { title: "help me", time: 50 },
     ];
@@ -23,6 +24,11 @@ class ActivityList extends React.Component {
       <div>
         {this.activityList.map((activity) => (
           <button
+            className={
+              activity.title === this.props.currentActivityName
+                ? "activity-list-btn active"
+                : "activity-list-btn"
+            }
             key={activity.title}
             onClick={() =>
               this.props.updateActivity(activity.title, activity.time)

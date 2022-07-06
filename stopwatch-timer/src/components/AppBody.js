@@ -4,15 +4,15 @@ import ActivityList from "./ActivityList.js";
 class AppBody extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { activityName: "Default", time: 0 };
+    this.state = { currentActivityName: "Default", time: 0 };
     this.updateActivity = this.updateActivity.bind(this);
   }
 
-  updateActivity(activityName, time) {
+  updateActivity(currentActivityName, time) {
     this.setState({
-      activityName: activityName,
+      currentActivityName: currentActivityName,
     });
-    console.log(this.state.activityName);
+    console.log(this.state.currentActivityName);
     this.setState({
       time: time,
     });
@@ -24,10 +24,10 @@ class AppBody extends React.Component {
       <div>
         <ActivityList
           updateActivity={this.updateActivity}
-          activeActivity={this.state.activityName}
+          currentActivityName={this.state.currentActivityName}
         ></ActivityList>
         <Activity
-          activityName={this.state.activityName}
+          currentActivityName={this.state.currentActivityName}
           time={this.state.time}
         ></Activity>
       </div>

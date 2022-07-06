@@ -22,48 +22,46 @@ class Activity extends React.Component {
     }
   }
   componentWillUnmount() {
-    if (this.timerID) {
-      clearInterval(this.timerID);
+    if (this.stopwatchID) {
+      clearInterval(this.stopwatchID);
+    }
+    if (this.countdownID) {
+      clearInterval(this.countdownID);
     }
   }
 
-  useEffect() {
-    console.log("props:", this.props.time);
-    this.setStartTime();
-  }
-
   startStopwatch() {
+    if (this.state.countdownActive) {
+      this.stopCountdown();
+    }
     this.setState({ stopwatchActive: true });
-    this.setState({
-      time: this.props.time,
-    });
-    this.timerID = setInterval(() => {
+    this.stopwatchID = setInterval(() => {
       this.tick("increase");
     }, 1000);
-    console.log(this.timerID);
+    console.log(this.stopwatchID);
   }
 
   stopStopwatch() {
     this.setState({ stopwatchActive: false });
-    console.log("pause called: ", this.timerID);
-    clearInterval(this.timerID);
+    console.log("pause called: ", this.stopwatchID);
+    clearInterval(this.stopwatchID);
   }
 
   startCountdown() {
+    if (this.state.stopwatchActive) {
+      this.stopStopwatch();
+    }
     this.setState({ countdownActive: true });
-    this.setState({
-      time: this.props.time,
-    });
-    this.timerID = setInterval(() => {
+    this.countdownID = setInterval(() => {
       this.tick("decrease");
     }, 1000);
-    console.log(this.timerID);
+    console.log(this.countdownID);
   }
 
   stopCountdown() {
     this.setState({ countdownActive: false });
-    console.log("pause called: ", this.timerID);
-    clearInterval(this.timerID);
+    console.log("pause called: ", this.countdownID);
+    clearInterval(this.countdownID);
   }
 
   tick(mode) {
@@ -73,6 +71,7 @@ class Activity extends React.Component {
         time: state.time + 1,
       }));
     } else {
+      console.log("countdown brh");
       if (this.state.time === 0) {
         this.stopCountdown();
         return;
@@ -93,7 +92,7 @@ class Activity extends React.Component {
   render() {
     return (
       <div>
-        <h1> {this.props.activityName} </h1>
+        <h1> {this.props.currentActivityName} </h1>
         <Clock clock={this.state.time}></Clock>
         <div className="control-btns-container">
           <ClockControl
@@ -108,6 +107,7 @@ class Activity extends React.Component {
             stopCountdown={this.stopCountdown}
             active={this.state.countdownActive}
             mode={"countdown"}
+            time={this.state.time}
           ></ClockControl>
         </div>
       </div>
