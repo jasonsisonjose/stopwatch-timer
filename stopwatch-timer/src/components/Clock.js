@@ -33,7 +33,10 @@ class Clock extends React.Component {
   render() {
     return (
       <div>
-        <span class="clock-digits"> {this.formatClock(this.props.clock)}</span>
+        <span className="clock-digits">
+          {" "}
+          {this.formatClock(this.props.clock)}
+        </span>
       </div>
     );
   }

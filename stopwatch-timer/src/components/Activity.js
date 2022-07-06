@@ -51,6 +51,7 @@ class Activity extends React.Component {
 
   tick(mode) {
     if (mode === "increase") {
+      console.log("stopwatch increase timer: ", this.state.time);
       this.setState((state) => ({
         time: state.time + 1,
       }));
@@ -77,16 +78,16 @@ class Activity extends React.Component {
     // const button = this.stopwatchButton();
     return (
       <div>
-        <h1> Topic </h1>
+        <h1> {this.props.activityName} </h1>
         <Clock clock={this.state.time}></Clock>
-        <div class="control-btns-container">
+        <div className="control-btns-container">
           <ClockControl
             startStopwatch={this.startStopwatch}
             stopStopwatch={this.stopStopwatch}
             active={this.state.stopwatchActive}
             mode={"stopwatch"}
           ></ClockControl>
-          <div class="control-btns-spacer"></div>
+          <div className="control-btns-spacer"></div>
           <ClockControl
             startCountdown={this.startCountdown}
             stopCountdown={this.stopCountdown}

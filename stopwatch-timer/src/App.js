@@ -1,8 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import Activity from "./components/Activity.js";
-import ActivityList from "./components/ActivityList.js";
+import AppBody from "./components/AppBody.js";
 class App extends React.Component {
   render() {
     return (
@@ -16,8 +15,7 @@ class App extends React.Component {
           </div>
         </div>
         <div className="App-body">
-          <ActivityList></ActivityList>
-          <Activity time="4"></Activity>
+          <AppBody></AppBody>
         </div>
       </div>
     );

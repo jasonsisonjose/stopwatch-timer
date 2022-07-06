@@ -23,14 +23,14 @@ class ClockControl extends React.Component {
   stopwatchButton() {
     if (this.props.active && this.props.mode === "stopwatch") {
       return (
-        <button class="clock-btn-active" onClick={this.stopStopwatch}>
+        <button className="clock-btn-active" onClick={this.stopStopwatch}>
           {" "}
           Stop{" "}
         </button>
       );
     } else {
       return (
-        <button class="clock-btn" onClick={this.startStopwatch}>
+        <button className="clock-btn" onClick={this.startStopwatch}>
           {" "}
           Stopwatch{" "}
         </button>
@@ -41,14 +41,14 @@ class ClockControl extends React.Component {
   countdownButton() {
     if (this.props.active) {
       return (
-        <button class="clock-btn-active" onClick={this.stopCountdown}>
+        <button className="clock-btn-active" onClick={this.stopCountdown}>
           {" "}
           Stop{" "}
         </button>
       );
     } else {
       return (
-        <button class="clock-btn" onClick={this.startCountdown}>
+        <button className="clock-btn" onClick={this.startCountdown}>
           {" "}
           Countdown{" "}
         </button>
