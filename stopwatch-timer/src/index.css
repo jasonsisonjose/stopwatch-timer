@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+button {
+  font-family: ArialRounded;
+}
+
 @font-face {
   font-family: "Varela Rounded";
   src: local("Varela Rounded"),

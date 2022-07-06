@@ -1,5 +1,4 @@
 .clock-btn {
-  font-family: ArialRounded;
   font-size: 23px;
   text-transform: uppercase;
   border-radius: 8px;
@@ -11,7 +10,6 @@
 }
 
 .clock-btn-active {
-  font-family: ArialRounded;
   font-size: 23px;
   text-transform: uppercase;
   border-radius: 8px;
