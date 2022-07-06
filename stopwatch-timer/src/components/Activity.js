@@ -15,14 +15,28 @@ class Activity extends React.Component {
     this.startCountdown = this.startCountdown.bind(this);
     this.stopCountdown = this.stopCountdown.bind(this);
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.time !== prevProps.time) {
+      this.setStartTime();
+    }
+  }
   componentWillUnmount() {
     if (this.timerID) {
       clearInterval(this.timerID);
     }
   }
 
+  useEffect() {
+    console.log("props:", this.props.time);
+    this.setStartTime();
+  }
+
   startStopwatch() {
     this.setState({ stopwatchActive: true });
+    this.setState({
+      time: this.props.time,
+    });
     this.timerID = setInterval(() => {
       this.tick("increase");
     }, 1000);
@@ -37,6 +51,9 @@ class Activity extends React.Component {
 
   startCountdown() {
     this.setState({ countdownActive: true });
+    this.setState({
+      time: this.props.time,
+    });
     this.timerID = setInterval(() => {
       this.tick("decrease");
     }, 1000);
@@ -66,16 +83,14 @@ class Activity extends React.Component {
     }
   }
 
-  stopwatchButton() {
-    if (this.state.stopwatchActive) {
-      return <button onClick={this.stopStopwatch}> Stop </button>;
-    } else {
-      return <button onClick={this.startStopwatch}> Start </button>;
-    }
+  setStartTime() {
+    // Default timer or when an activity button is pressed
+    this.setState({
+      time: this.props.time,
+    });
   }
 
   render() {
-    // const button = this.stopwatchButton();
     return (
       <div>
         <h1> {this.props.activityName} </h1>

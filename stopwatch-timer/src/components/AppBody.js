@@ -8,10 +8,15 @@ class AppBody extends React.Component {
     this.updateActivity = this.updateActivity.bind(this);
   }
 
-  updateActivity(activityName) {
+  updateActivity(activityName, time) {
     this.setState({
       activityName: activityName,
     });
+    console.log(this.state.activityName);
+    this.setState({
+      time: time,
+    });
+    console.log(this.state.time);
   }
 
   render() {

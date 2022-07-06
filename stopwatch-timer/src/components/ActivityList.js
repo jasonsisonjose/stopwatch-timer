@@ -3,6 +3,10 @@ import Activity from "./Activity";
 class ActivityList extends React.Component {
   constructor(props) {
     super(props);
+    this.activityList = [
+      { title: "bro", time: 10 },
+      { title: "help me", time: 50 },
+    ];
   }
   // Activity: {title, time}
   // Retrieve activites from IndexDB or DB
@@ -15,7 +19,21 @@ class ActivityList extends React.Component {
         Default Activity
       </button>
     );
-    return <div>{test}</div>;
+    return (
+      <div>
+        {this.activityList.map((activity) => (
+          <button
+            key={activity.title}
+            onClick={() =>
+              this.props.updateActivity(activity.title, activity.time)
+            }
+          >
+            {" "}
+            {activity.title}
+          </button>
+        ))}
+      </div>
+    );
   }
 }
 
