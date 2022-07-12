@@ -6,13 +6,13 @@ function AppBody() {
   const [currentActivityName, setActivityName] = useState("Default");
   const [time, setTime] = useState(0);
 
-  function updateActivity(currentActivityName, time) {
+  const updateActivity = (currentActivityName, time) => {
     console.log(currentActivityName, time);
     setActivityName(currentActivityName);
     setTime(time);
-  }
+  };
   // [TODO]: Retrieve activites from IndexDB or DB
-  function getActivites() {}
+  const getActivites = () => {};
   return (
     <div>
       <ActivityList
