@@ -1,118 +1,96 @@
-import React, { Component } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Clock from "./Clock.js";
 import ClockControl from "./ClockControl.js";
 import "./Activity.css";
-class Activity extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      time: this.props.time,
-      stopwatchActive: false,
-      countdownActive: false,
-    };
-    this.startStopwatch = this.startStopwatch.bind(this);
-    this.stopStopwatch = this.stopStopwatch.bind(this);
-    this.startCountdown = this.startCountdown.bind(this);
-    this.stopCountdown = this.stopCountdown.bind(this);
-  }
+function Activity(props) {
+  const [time, setTime] = useState(props.time);
+  const [stopwatchActive, setStopwatch] = useState(false);
+  const [countdownActive, setCountdown] = useState(false);
+  let stopwatchID = useRef(null);
+  let countdownID = useRef(null);
+  // Only updates when the props time change (when different activity is pressed)
+  useEffect(() => {
+    setTime(props.time);
+  }, [props.time]);
 
-  componentDidUpdate(prevProps) {
-    if (this.props.time !== prevProps.time) {
-      this.setStartTime();
+  // Fires every instance where time is updated
+  useEffect(() => {
+    console.log("updated time state: ", time);
+    if (time === 0 && countdownActive) {
+      console.log("time is 0, shutting down countdown");
+      stopCountdown();
+      return;
     }
-  }
-  componentWillUnmount() {
-    if (this.stopwatchID) {
-      clearInterval(this.stopwatchID);
-    }
-    if (this.countdownID) {
-      clearInterval(this.countdownID);
-    }
-  }
+  }, [time, countdownActive]);
 
-  startStopwatch() {
-    if (this.state.countdownActive) {
-      this.stopCountdown();
+  useEffect(() => {}, [stopwatchActive]);
+
+  const startStopwatch = () => {
+    if (countdownID.current) {
+      console.log("countdown exists, CLOSING instance");
+      stopCountdown();
     }
-    this.setState({ stopwatchActive: true });
-    this.stopwatchID = setInterval(() => {
-      this.tick("increase");
+    setStopwatch((stopwatchActive) => (stopwatchActive = true));
+    stopwatchID.current = setInterval(() => {
+      tick("increase");
     }, 1000);
-    console.log(this.stopwatchID);
-  }
+    console.log(stopwatchID);
+  };
 
-  stopStopwatch() {
-    this.setState({ stopwatchActive: false });
-    console.log("pause called: ", this.stopwatchID);
-    clearInterval(this.stopwatchID);
-  }
+  const stopStopwatch = () => {
+    setStopwatch((stopwatchActive) => (stopwatchActive = false));
+    console.log("pause called: ", stopwatchID);
+    clearInterval(stopwatchID.current);
+  };
 
-  startCountdown() {
-    if (this.state.stopwatchActive) {
-      this.stopStopwatch();
+  const startCountdown = () => {
+    if (stopwatchID.current) {
+      console.log("stopwatch exists, CLOSING instance");
+      stopStopwatch();
     }
-    this.setState({ countdownActive: true });
-    this.countdownID = setInterval(() => {
-      this.tick("decrease");
+    setCountdown((countdownActive) => (countdownActive = true));
+    countdownID.current = setInterval(() => {
+      tick("decrease");
     }, 1000);
-    console.log(this.countdownID);
-  }
+    console.log("countdown timer id: ", countdownID.current);
+  };
 
-  stopCountdown() {
-    this.setState({ countdownActive: false });
-    console.log("pause called: ", this.countdownID);
-    clearInterval(this.countdownID);
-  }
+  const stopCountdown = () => {
+    setCountdown((countdownActive) => (countdownActive = false));
+    console.log("pause called: ", countdownID);
+    clearInterval(countdownID.current);
+  };
 
-  tick(mode) {
+  const tick = (mode) => {
     if (mode === "increase") {
-      console.log("stopwatch increase timer: ", this.state.time);
-      this.setState((state) => ({
-        time: state.time + 1,
-      }));
+      setTime((time) => time + 1);
     } else {
-      console.log("countdown brh");
-      if (this.state.time === 0) {
-        this.stopCountdown();
-        return;
-      }
-      this.setState((state) => ({
-        time: state.time - 1,
-      }));
+      setTime((time) => time - 1);
     }
-  }
+  };
 
-  setStartTime() {
-    // Default timer or when an activity button is pressed
-    this.setState({
-      time: this.props.time,
-    });
-  }
-
-  render() {
-    return (
-      <div>
-        <h1> {this.props.currentActivityName} </h1>
-        <Clock clock={this.state.time}></Clock>
-        <div className="control-btns-container">
-          <ClockControl
-            startStopwatch={this.startStopwatch}
-            stopStopwatch={this.stopStopwatch}
-            active={this.state.stopwatchActive}
-            mode={"stopwatch"}
-          ></ClockControl>
-          <div className="control-btns-spacer"></div>
-          <ClockControl
-            startCountdown={this.startCountdown}
-            stopCountdown={this.stopCountdown}
-            active={this.state.countdownActive}
-            mode={"countdown"}
-            time={this.state.time}
-          ></ClockControl>
-        </div>
+  return (
+    <div>
+      <h1> {props.currentActivityName} </h1>
+      <Clock clock={time}></Clock>
+      <div className="control-btns-container">
+        <ClockControl
+          startStopwatch={startStopwatch}
+          stopStopwatch={stopStopwatch}
+          active={stopwatchActive}
+          mode={"stopwatch"}
+        ></ClockControl>
+        <div className="control-btns-spacer"></div>
+        <ClockControl
+          startCountdown={startCountdown}
+          stopCountdown={stopCountdown}
+          active={countdownActive}
+          mode={"countdown"}
+          time={time}
+        ></ClockControl>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Activity;

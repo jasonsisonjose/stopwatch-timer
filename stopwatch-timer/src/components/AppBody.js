@@ -1,38 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import Activity from "./Activity.js";
 import ActivityList from "./ActivityList.js";
-class AppBody extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { currentActivityName: "Default", time: 0 };
-    this.updateActivity = this.updateActivity.bind(this);
-  }
 
-  updateActivity(currentActivityName, time) {
-    this.setState({
-      currentActivityName: currentActivityName,
-    });
-    console.log(this.state.currentActivityName);
-    this.setState({
-      time: time,
-    });
-    console.log(this.state.time);
-  }
+function AppBody() {
+  const [currentActivityName, setActivityName] = useState("Default");
+  const [time, setTime] = useState(0);
 
-  render() {
-    return (
-      <div>
-        <ActivityList
-          updateActivity={this.updateActivity}
-          currentActivityName={this.state.currentActivityName}
-        ></ActivityList>
-        <Activity
-          currentActivityName={this.state.currentActivityName}
-          time={this.state.time}
-        ></Activity>
-      </div>
-    );
-  }
+  const updateActivity = (currentActivityName, time) => {
+    console.log(currentActivityName, time);
+    setActivityName(currentActivityName);
+    setTime(time);
+  };
+  // [TODO]: Retrieve activites from IndexDB or DB
+  const getActivites = () => {};
+  return (
+    <div>
+      <ActivityList
+        updateActivity={updateActivity}
+        currentActivityName={currentActivityName}
+      ></ActivityList>
+      <Activity
+        currentActivityName={currentActivityName}
+        time={time}
+      ></Activity>
+    </div>
+  );
 }
 
 export default AppBody;
