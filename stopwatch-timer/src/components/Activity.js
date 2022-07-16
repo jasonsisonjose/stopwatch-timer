@@ -16,14 +16,13 @@ function Activity(props) {
   // Fires every instance where time is updated
   useEffect(() => {
     console.log("updated time state: ", time);
+
     if (time === 0 && countdownActive) {
       console.log("time is 0, shutting down countdown");
       stopCountdown();
       return;
     }
   }, [time, countdownActive]);
-
-  useEffect(() => {}, [stopwatchActive]);
 
   const startStopwatch = () => {
     if (countdownID.current) {
@@ -41,6 +40,7 @@ function Activity(props) {
     setStopwatch((stopwatchActive) => (stopwatchActive = false));
     console.log("pause called: ", stopwatchID);
     clearInterval(stopwatchID.current);
+    props.updateStorageActivity(props.currentActivityKey, time);
   };
 
   const startCountdown = () => {
@@ -59,6 +59,9 @@ function Activity(props) {
     setCountdown((countdownActive) => (countdownActive = false));
     console.log("pause called: ", countdownID);
     clearInterval(countdownID.current);
+    console.log("time is a bitch: ", time);
+    props.updateStorageActivity(props.currentActivityKey, time);
+    // Stop --> Save State (send it )
   };
 
   const tick = (mode) => {
